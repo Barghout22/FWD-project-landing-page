@@ -1,10 +1,11 @@
 //your-active-class
+const navBarList = document.querySelector("#navbar__list");
 
 function addSections(numberOfSections) {
   const fragment = document.createDocumentFragment();
   const navBarFragment = document.createDocumentFragment();
   let sectionHeads = [];
-  const navBarList = document.querySelector("#navbar__list");
+
   const mainContainer = document.querySelector("main");
   for (let i = 1; i <= numberOfSections; i++) {
     sectionHeads.push(`section ${i}`);
@@ -44,13 +45,13 @@ function addSections(numberOfSections) {
     fragment.append(newSection);
   }
   mainContainer.append(fragment);
-  for (section of sectionHeads) {
+  for (index of sectionHeads.keys()) {
     const listElement = document.createElement("li");
     listElement.setAttribute("class", "navbar__menu");
     const anchor = document.createElement("a");
-    anchor.textContent = section;
+    anchor.textContent = sectionHeads[index];
     anchor.setAttribute("class", "menu__link");
-    anchor.setAttribute("id", section);
+    anchor.setAttribute("id", index + 1);
     listElement.append(anchor);
     navBarFragment.append(listElement);
   }
@@ -58,6 +59,49 @@ function addSections(numberOfSections) {
 }
 
 addSections(5);
+
+function HighlightSection() {
+  const sections = document.querySelectorAll("section");
+  for (const section of sections) {
+    const box = section.getBoundingClientRect();
+    if (box.top <= 200 && box.bottom >= 200) {
+      section.classList.contains("your-active-class")
+        ? null
+        : section.classList.add("your-active-class");
+    } else {
+      section.classList.contains("your-active-class")
+        ? section.classList.remove("your-active-class")
+        : null;
+    }
+  }
+}
+
+function handleAnchorClick(event) {
+  const requiredSection = document.querySelector(`#section${event.target.id}`);
+  HighlightSection();
+  requiredSection.scrollIntoView({ behavior: "smooth" });
+}
+
+function displayTopMenu() {
+  const navBarContainer = document.querySelector(".navbar__menu");
+  //   navBarContainer.removeAttribute("hidden");
+  //   setTimeout(() => {
+  //     navBarContainer.setAttribute("hidden", true);
+  //   }, 10000);
+}
+
+document.addEventListener("wheel", () => {
+  displayTopMenu();
+  HighlightSection();
+});
+document.addEventListener("mousemove", () => {
+  displayTopMenu();
+});
+navBarList.addEventListener("click", (event) => {
+  handleAnchorClick(event);
+  displayTopMenu();
+});
+
 //listOfItems.append(fragment);
 /**
  *
