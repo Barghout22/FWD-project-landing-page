@@ -1,7 +1,6 @@
-//your-active-class
 const navBarList = document.querySelector("#navbar__list");
 const scrollUpBttn = document.querySelector(".scrollToTop");
-let movementFlag = false;
+let interval;
 
 //this function takes a number and appends this many identical sections to the main body ,as well as add their names as anchor buttons into the navbar
 function addSections(numberOfSections) {
@@ -101,20 +100,20 @@ function handleAnchorClick(event) {
     : requiredSection.classList.add("your-active-class");
 }
 
-//display the navbar if this is called and set a timeout for it to be hidden again
+//display the navbar if this is called and set a timeout for it to be hidden again if the viewport is not at the top of the page
 function displayTopMenu() {
   const navBarContainer = document.querySelector(".navbar__menu");
   navBarContainer.removeAttribute("hidden");
-  movementFlag = false;
-  const interval = setTimeout(() => {
-    !movementFlag ? navBarContainer.setAttribute("hidden", true) : null;
-  }, 5000);
-  if (movementFlag) clearTimeout(interval);
+  clearTimeout(interval);
+  if (window.pageYOffset > 250) {
+    interval = setTimeout(() => {
+      navBarContainer.setAttribute("hidden", true);
+    }, 3000);
+  }
 }
 
 //capture scroll events and use it to highlight sections in view\display scroll up button if we are at the bottom and show the navBar
 document.addEventListener("scroll", () => {
-  movementFlag = true;
   scrollUpBttn.getBoundingClientRect().top < 800
     ? scrollUpBttn.removeAttribute("hidden")
     : null;
@@ -123,13 +122,11 @@ document.addEventListener("scroll", () => {
 });
 
 document.addEventListener("mousemove", () => {
-  movementFlag = true;
   displayTopMenu();
 });
 
 //capture and handle clicks on the navbar items
 navBarList.addEventListener("click", (event) => {
-  movementFlag = true;
   handleAnchorClick(event);
   displayTopMenu();
 });
