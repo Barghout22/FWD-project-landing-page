@@ -235,3 +235,10 @@ section.your-active-class .landing__container::after {
 ul {
   list-style-type: none;
 }
+
+.scrollToTop {
+  padding: 50px;
+  color: rgb(194, 190, 190);
+  background-color: aquamarine;
+  font-size: 30px;
+}
