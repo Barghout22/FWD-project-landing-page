@@ -10,3 +10,5 @@ The html and css were all provided as starting points by the curiculum.
 - Listen to clicks on the link in navbar and move the screen to the corresponding sections.
 - Event listen to scrolling and check the current position of the viewport and highlight the section in view.
 - Hide the navbar when the user has not been scrolling for a while using a time out.
+
+**live version:** https://barghout22.github.io/FWD-project-landing-page/
